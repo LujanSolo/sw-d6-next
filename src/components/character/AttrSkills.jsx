@@ -93,19 +93,25 @@ const AttrSkills = () => {
 
   const updateAttributeValue = (index, action) => {
     let newAttributes = [...attributes];
-    if (action === 'add') {
+    if (action === 'attr-add') {
       if (attrPoints > 0 && newAttributes[index].value < 6) {
         newAttributes[index].value++;
         setAttrPoints(prevPoints => prevPoints - 1);  // Update attrPoints immutably
         setAttributes(newAttributes);
         //todo: set skill points based off of attribute value
+        newAttributes[index].skills.forEach(skill => {
+          skill.value = newAttributes[index].value;
+        })
         //todo: update skill points from skill point pool
       }
-    } else if (action === 'minus') {
+    } else if (action === 'attr-minus') {
       if (newAttributes[index].value > 0 && attrPoints < 18) {
         newAttributes[index].value--;
         setAttrPoints(prevPoints => prevPoints + 1);  // Update attrPoints immutably
         setAttributes(newAttributes);
+        newAttributes[index].skills.forEach(skill => {
+          skill.value = newAttributes[index].value;
+        })
       }
     };
   };
@@ -126,16 +132,16 @@ const AttrSkills = () => {
                 + {attr.bonus}
               </span>
             </h2>
-            <button className="bg-accent text-foreground p-1 m-1 rounded" onClick={() => updateAttributeValue(index, 'add')}>+</button>
-            <button className="bg-accent text-foreground p-1 m-1 rounded" onClick={() => updateAttributeValue(index, 'minus')}>-</button>
+            <button className="bg-accent text-foreground p-1 m-1 rounded" onClick={() => updateAttributeValue(index, 'attr-add')}>+</button>
+            <button className="bg-accent text-foreground p-1 m-1 rounded" onClick={() => updateAttributeValue(index, 'attr-minus')}>-</button>
             <ul>
               {attr.skills.map((skill, index) => (
                 <li key={index} className="text-sm text-accent capitalize">{skill.name}: <span className="text-sm text-foreground">{skill.value}</span>
                   <span>
-                    <button className="p-1 m-1 rounded" onClick={() => updateSkillValue(index, 'add')}>+</button>
+                    <button className="p-1 m-1 rounded" onClick={() => updateSkillValue(index, 'skill-add')}>+</button>
                   </span>
                   <span>
-                    <button className="p-1 m-1 rounded" onClick={() => updateSkillValue(index, 'minus')}>-</button>
+                    <button className="p-1 m-1 rounded" onClick={() => updateSkillValue(index, 'skill-minus')}>-</button>
                   </span>
                 </li>
 
