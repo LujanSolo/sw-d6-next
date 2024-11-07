@@ -67,7 +67,7 @@ const AttrBlock = [
       { name: "space transports", value: 0, bonus: 0, },
       { name: "starship gunnery", value: 0, bonus: 0, },
       { name: "starship shields", value: 0, bonus: 0, },
-      { name: "swoop operation", value: 0, bonus: 0, }
+      { name: "swoop operation", value: 0, bonus: 0, },
     ]
   },
   {
@@ -118,26 +118,27 @@ const AttrSkills = () => {
 
   const updateSkillValue = (attrIndex, skillIndex, action) => {
     let newAttributes = [...attributes];
+    const skill = newAttributes[attrIndex].skills[skillIndex];
+
     if (action === 'skill-add') {
       if (
         skillPoints > 0 &&
-        newAttributes[attrIndex].skills[skillIndex].value < newAttributes[attrIndex].value + 2
+        skill.bonus < 2
       ) {
-        newAttributes[attrIndex].skills[skillIndex].value++;
+        skill.bonus++;
         setSkillPoints(prevPoints => prevPoints - 1);  // Update attrPoints immutably
         setAttributes(newAttributes);
       }
     } else if (action === 'skill-minus') {
       if (
-        newAttributes[attrIndex].skills[skillIndex].value > 0 && skillPoints < 7
+        skill.bonus > 0 && skillPoints < 7
       ) {
-        newAttributes[attrIndex].skills[skillIndex].value--;
+        skill.bonus--;
         setSkillPoints(prevPoints => prevPoints + 1);
         setAttributes(newAttributes);
       }
     };
   };
-
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -158,17 +159,31 @@ const AttrSkills = () => {
             <button className="bg-accent text-foreground p-1 m-1 rounded" onClick={() => updateAttributeValue(index, 'attr-minus')}>-</button>
             <ul>
               {attr.skills.map((skill, skillIndex) => (
-                <li key={skillIndex} className="text-sm text-accent capitalize">{skill.name}: <span className="text-sm text-foreground">{skill["value"]}</span>
-                  <span>
-                    <button className="p-1 m-1 rounded" onClick={() => updateSkillValue(index, skillIndex, 'skill-add')}>+</button>
+                <li key={skillIndex} className="text-sm text-accent capitalize">
+                  {skill.name}:
+                  <span className="text-sm text-foreground">
+                    {attr.value + skill.bonus}
                   </span>
                   <span>
-                    <button className="p-1 m-1 rounded" onClick={() => updateSkillValue(index, skillIndex, 'skill-minus')}>-</button>
+                    <button
+                      className="p-1 m-1 rounded"
+                      onClick={() => updateSkillValue(index, skillIndex, 'skill-add')}
+                    >
+                      +
+                    </button>
+                  </span>
+                  <span>
+                    <button
+                      className="p-1 m-1 rounded"
+                      onClick={() => updateSkillValue(index, skillIndex, 'skill-minus')}
+                    >
+                      -
+                    </button>
                   </span>
                 </li>
-
               ))}
             </ul>
+
           </div>
         ))}
       </div>
