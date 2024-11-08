@@ -1,8 +1,10 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
 import { motion } from 'framer-motion';
+import AttrSkills from './AttrSkills';
+import { AttrBlock } from '../../app/data';
 
 const item = {
   hidden: { scale: 0 },
@@ -20,23 +22,19 @@ const container = {
   }
 };
 
-//       <input type="text" placeholder="Species" {...register("Species", {required: true})} />
-//       <input type="number" placeholder="Height (meters)" {...register("Height (meters)", {required: true})} />
-//       <input type="number" placeholder="Age" {...register("Age", {required: true, max: 900, min: 5})} />
-//       <textarea {...register("Physical Description", {required: true, min: 10})} />
-
-//       <input type="submit" />
-//     </form>
-//   );
-// }
-
 export default function Form() {
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  let [attrPoints, setAttrPoints] = useState(18);
+  const [attributes, setAttributes] = useState(AttrBlock);
+  let [skillPoints, setSkillPoints] = useState(7);
 
-
-
-  const onSubmit = () => {
-    console.log('submitted');
+  const onSubmit = (data) => {
+    const formData = {
+      ...data,
+      attributes,
+    }
+    console.log('submitted', formData);
   };
 
   return (
@@ -46,7 +44,6 @@ export default function Form() {
         variants={container}
         initial='hidden'
         animate='show'
-
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-md w-full flex flex-col items-center justify-center space-y-4"
       >
@@ -89,7 +86,7 @@ export default function Form() {
         }
         <motion.input
           variants={item}
-          type="number"
+          type="flaot"
           placeholder="Height (meters)" {...register("height", { required: true })}
           className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
@@ -106,24 +103,33 @@ export default function Form() {
           errors.name && <span className="inline-block self-start text-accent">{errors.age.message}</span>
         }
 
-        <motion.textarea 
-          variants={item} 
+        <motion.textarea
+          variants={item}
           placeholder='Physical description' {...register("description", {
-          required: "please enter a character description...",
-          maxLength: {
-            value: 2500,
-            message: "Message should be less than 2500 characters..."
-          },
-          minLength: {
-            value: 10,
-            message: "Message should be more than 10 characters..."
-          }
-        })}
+            required: "please enter a character description...",
+            maxLength: {
+              value: 2500,
+              message: "Message should be less than 2500 characters..."
+            },
+            minLength: {
+              value: 10,
+              message: "Message should be more than 10 characters..."
+            }
+          })}
           className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.message && <span className="inline-block self-start text-accent">{errors.description.message}</span>
         }
+
+        <AttrSkills 
+          attributes={attributes}
+          setAttributes={setAttributes}
+          attrPoints={attrPoints}
+          setAttrPoints={setAttrPoints}
+          skillPoints={skillPoints}
+          setSkillPoints={setSkillPoints}
+        />
 
         <motion.input variants={item} type="submit" value="Submit details"
           className='px-10 py-4 rounded-md shadow-lg bg-background border border-accent/30 border-solid hover:shadow-glass-sm backdrop-blur-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 cursor-pointer'
