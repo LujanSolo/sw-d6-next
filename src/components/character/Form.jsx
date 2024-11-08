@@ -34,6 +34,8 @@ export default function Form() {
       ...data,
       attributes,
     }
+    toast.success('Character created successfully!');
+    reset();
     console.log('submitted', formData);
   };
 
@@ -97,7 +99,7 @@ export default function Form() {
         <motion.input
           variants={item}
           type="number" placeholder="Age" {...register("age", { required: true, max: 900, min: 5 })}
-          className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
+          className="w-full p-2 rounded-md shadow-lg text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.name && <span className="inline-block self-start text-accent">{errors.age.message}</span>
@@ -116,7 +118,7 @@ export default function Form() {
               message: "Message should be more than 10 characters..."
             }
           })}
-          className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
+          className="w-full p-2 rounded-md shadow-lg text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.message && <span className="inline-block self-start text-accent">{errors.description.message}</span>
