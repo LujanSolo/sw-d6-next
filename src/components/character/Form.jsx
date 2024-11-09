@@ -57,7 +57,7 @@ export default function Form() {
             message: "Character type is empty..."
           }
         })}
-          className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
+          className="w-full p-2 rounded-md shadow-lg text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.name && <span className="inline-block self-start text-accent">{errors.type.message}</span>
@@ -69,7 +69,7 @@ export default function Form() {
             message: "Name field is empty..."
           }
         })}
-          className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
+          className="w-full p-2 rounded-md shadow-lg text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.email && <span className="inline-block self-start text-accent">{errors.name.message}</span>
@@ -81,7 +81,7 @@ export default function Form() {
             message: "Species field is empty..."
           }
         })}
-          className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
+          className="w-full p-2 rounded-md shadow-lg text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.message && <span className="inline-block self-start text-accent">{errors.species.message}</span>
@@ -90,7 +90,7 @@ export default function Form() {
           variants={item}
           type="flaot"
           placeholder="Height (meters)" {...register("height", { required: true })}
-          className="w-full p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
+          className="w-full p-2 rounded-md shadow-lg text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 custom-bg-alt"
         />
         {
           errors.name && <span className="inline-block self-start text-accent">{errors.height.message}</span>
@@ -134,7 +134,7 @@ export default function Form() {
         />
 
         <motion.input variants={item} type="submit" value="Submit details"
-          className='px-10 py-4 rounded-md shadow-lg bg-background border border-accent/30 border-solid hover:shadow-glass-sm backdrop-blur-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 cursor-pointer'
+          className='px-10 py-4 rounded-md shadow-lg bg-background border border-accent/30 border-solid hover:shadow-glass-sm backdrop-blur-sm text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 cursor-pointer'
         />
       </motion.form>
     </>
